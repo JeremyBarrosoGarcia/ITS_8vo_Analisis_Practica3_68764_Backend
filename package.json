@@ -1,0 +1,35 @@
+{
+  "name": "its_8vo_analisis_practica3_68764_backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.ts",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JeremyBarrosoGarcia/ITS_8vo_Analisis_Practica3_68764_Backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JeremyBarrosoGarcia/ITS_8vo_Analisis_Practica3_68764_Backend/issues"
+  },
+  "homepage": "https://github.com/JeremyBarrosoGarcia/ITS_8vo_Analisis_Practica3_68764_Backend#readme",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.30",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.2"
+  }
+}

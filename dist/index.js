@@ -1,0 +1,21 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express = require("express");
+const cors = require("cors");
+const AuthController_1 = require("./infrastructure/controllers/AuthController");
+const InMemoryAuthRepository_1 = require("./infrastructure/services/InMemoryAuthRepository");
+const RegisterUseCase_1 = require("./core/useCases/RegisterUseCase");
+const LoginUseCase_1 = require("./core/useCases/LoginUseCase");
+const app = express();
+const port = 3000;
+app.use(cors());
+app.use(express.json());
+const authRepository = new InMemoryAuthRepository_1.InMemoryAuthRepository();
+const registerUseCase = new RegisterUseCase_1.RegisterUseCase(authRepository);
+const loginUseCase = new LoginUseCase_1.LoginUseCase(authRepository);
+const authController = new AuthController_1.AuthController(registerUseCase, loginUseCase);
+app.post("/register", (req, res) => authController.register(req, res));
+app.post("/login", (req, res) => authController.login(req, res));
+app.listen(port, () => {
+    console.log(`Backend running on http://localhost:5173/`);
+});
