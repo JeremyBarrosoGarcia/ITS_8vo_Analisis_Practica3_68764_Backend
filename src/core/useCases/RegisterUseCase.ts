@@ -1,14 +1,11 @@
 import { User } from "../domain/User";
-import { AuthRepository } from "../ports/AuthRepository";
+import { AuthService } from "../ports/AuthService";
 
-export default class RegisterUseCase {
-  constructor(private authRepository: AuthRepository) {}
+export class RegisterUseCase {
+  constructor(private authService: AuthService) {}
 
-  async execute(user: User): Promise<User> {
-    const existingUser = await this.authRepository.findByEmail(user.email);
-    if (existingUser) {
-      throw new Error("User already exists");
-    }
-    return this.authRepository.register(user);
+  async execute(email: string, password: string, name: string): Promise<User | null> {
+    return this.authService.register(email, password, name);
   }
 }
+

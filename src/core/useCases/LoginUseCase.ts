@@ -1,14 +1,10 @@
 import { User } from "../domain/User";
-import { AuthRepository } from "../ports/AuthRepository";
+import { AuthService } from "../ports/AuthService";
 
-export default class LoginUseCase {
-  constructor(private authRepository: AuthRepository) {}
+export class LoginUseCase {
+  constructor(private authService: AuthService) {}
 
-  async execute(email: string, password: string): Promise<{ user: User; token: string } | null> {
-    const user = await this.authRepository.findByEmail(email);
-    if (!user || user.password !== password) {
-      return null;
-    }
-    return { user, token: "fake-jwt-token-backend" };
+  async execute(email: string, password: string): Promise<User | null> {
+    return this.authService.login(email, password);
   }
 }

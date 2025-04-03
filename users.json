@@ -1,0 +1,23 @@
+[
+  {
+    "email": "jeremy@gmail.com",
+    "password": "12345678",
+    "name": "Jeremy Barroso"
+  },
+
+  {
+    "email": "ejemplo3@ejemplo.com",
+    "password": "12345678",
+    "name": "Ejemplo3"
+  },
+  {
+    "email": "jeremybarrsoo@gmail.com",
+    "password": "12345678",
+    "name": "Jeremy"
+  },
+  {
+    "email": "jeremyba@gmail.com",
+    "password": "87654321",
+    "name": "dgsdafgfds"
+  }
+]

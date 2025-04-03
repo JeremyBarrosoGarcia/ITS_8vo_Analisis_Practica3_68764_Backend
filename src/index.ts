@@ -1,24 +1,32 @@
 import express from "express";
 import cors from "cors";
-import AuthController from "./infrastructure/controllers/AuthController";
-import InMemoryAuthRepository from "./infrastructure/services/InMemoryAuthRepository";
-import RegisterUseCase from "./core/useCases/RegisterUseCase";
-import LoginUseCase from "./core/useCases/LoginUseCase";
+import { AuthServiceImpl } from "./infrastructure/services/AuthServiceImpl";
+import { LoginUseCase } from "./core/useCases/LoginUseCase";
+import { RegisterUseCase } from "./core/useCases/RegisterUseCase";
 
 const app = express();
-const port = 3000;
+app.use(cors({ origin: "http://localhost:5173" }));
+const authService = new AuthServiceImpl();
+const loginUseCase = new LoginUseCase(authService);
+const registerUseCase = new RegisterUseCase(authService);
 
-app.use(cors());
 app.use(express.json());
 
-const authRepository = new InMemoryAuthRepository();
-const registerUseCase = new RegisterUseCase(authRepository);
-const loginUseCase = new LoginUseCase(authRepository);
-const authController = new AuthController(registerUseCase, loginUseCase);
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const user = await loginUseCase.execute(email, password);
+  if (user) res.json(user);
+  else res.status(401).json({ error: "Invalid credentials" });
+});
 
-app.post("/register", (req, res) => authController.register(req, res));
-app.post("/login", (req, res) => authController.login(req, res));
+app.post("/register", async (req, res) => {
+  const { email, password, name } = req.body;
+  const user = await registerUseCase.execute(email, password, name);
+  if (user) res.json(user);
+  else res.status(400).json({ error: "User already exists" });
+});
 
-app.listen(port, () => {
-  console.log(`Backend running on http://localhost:${port}`);
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Backend running on http://localhost:${PORT}`);
 });
